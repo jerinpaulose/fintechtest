@@ -36,6 +36,7 @@ export function determineBillingMembers(members: ClubMember[]): BillingInfo {
             dependentChildren.push(member);
         } else {
             nonDependentMembers.push(member); 
+        }
     }
 
     members.forEach(member => {
