@@ -1,0 +1,23 @@
+[
+    { "id": 1, "name": "Beer A", "abv": 5 },
+    { "id": 2, "name": "Beer B", "abv": 8 },
+    { "id": 3, "name": "Beer C", "abv": 10 },
+    { "id": 4, "name": "Beer D", "abv": 3 },
+    { "id": 5, "name": "Beer E", "abv": 12 },
+    { "id": 6, "name": "Beer F", "abv": 7 },
+    { "id": 7, "name": "Beer G", "abv": 9 },
+    { "id": 8, "name": "Beer H", "abv": 6 },
+    { "id": 9, "name": "Beer I", "abv": 11 },
+    { "id": 10, "name": "Beer J", "abv": 4 },
+    { "id": 11, "name": "Beer K", "abv": 8.5 },
+    { "id": 12, "name": "Beer L", "abv": 5.5 },
+    { "id": 13, "name": "Beer M", "abv": 7.2 },
+    { "id": 14, "name": "Beer N", "abv": 9.8 },
+    { "id": 15, "name": "Beer O", "abv": 3.8 },
+    { "id": 16, "name": "Beer P", "abv": 6.7 },
+    { "id": 17, "name": "Beer Q", "abv": 10.2 },
+    { "id": 18, "name": "Beer R", "abv": 4.6 },
+    { "id": 19, "name": "Beer S", "abv": 8.3 },
+    { "id": 20, "name": "Beer T", "abv": 9.5 }
+  ]
+  
