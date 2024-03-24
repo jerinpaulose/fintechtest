@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TablePagination } from '@mui/material';
+import { Grid, GridColumn } from '@progress/kendo-react-grid';
+import '@progress/kendo-theme-material/dist/all.css';
 
 interface CatBreed {
   id: string;
@@ -17,7 +18,8 @@ interface CatBreedListProps {
 const CatBreedList: React.FC<CatBreedListProps> = ({ filterCondition }) => {
   const [breedsData, setBreedsData] = useState<CatBreed[]>([]);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [pageSize, setPageSize] = useState(5);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Fetch cat breeds data from API when the component mounts
@@ -34,6 +36,8 @@ const CatBreedList: React.FC<CatBreedListProps> = ({ filterCondition }) => {
       setBreedsData(breedsDataFromAPI);
     } catch (error) {
       console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -47,51 +51,38 @@ const CatBreedList: React.FC<CatBreedListProps> = ({ filterCondition }) => {
 
   const filteredBreeds = filterBreedsByCountry(breedsData, filterCondition);
 
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
+  const handlePageChange = (event: any) => {
+    setPage(event.page.skip / pageSize);
   };
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+  const handlePageSizeChange = (event: any) => {
+    setPageSize(event.pageSize);
     setPage(0);
   };
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <>
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Breed Name</TableCell>
-              <TableCell>Temperament</TableCell>
-              <TableCell>Origin</TableCell>
-              <TableCell>Life Span</TableCell>
-              <TableCell>Description</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {filteredBreeds.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((breed: CatBreed) => (
-              <TableRow key={breed.id}>
-                <TableCell>{breed.name}</TableCell>
-                <TableCell>{breed.temperament}</TableCell>
-                <TableCell>{breed.origin}</TableCell>
-                <TableCell>{breed.life_span}</TableCell>
-                <TableCell>{breed.description}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={filteredBreeds.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </>
+    <Grid
+      data={filteredBreeds.slice(page * pageSize, page * pageSize + pageSize)}
+      pageable={{
+        pageSizes: [5, 10, 25],
+        buttonCount: 5
+      }}
+      total={filteredBreeds.length}
+      skip={page * pageSize}
+      pageSize={pageSize}
+      onPageChange={handlePageChange}
+      // onPageSizeChange={handlePageSizeChange}
+    >
+      <GridColumn field="name" title="Breed Name" />
+      <GridColumn field="temperament" title="Temperament" />
+      <GridColumn field="origin" title="Origin" />
+      <GridColumn field="life_span" title="Life Span" />
+      <GridColumn field="description" title="Description" />
+    </Grid>
   );
 };
 
